@@ -48,10 +48,10 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ExcursionDetailActivity.class);
-            intent.putExtra("title", excursion.getTitle());
-            intent.putExtra("date", dateFormat.format(excursion.getDate()));
+            intent.putExtra("excursionId", excursion.getId());  // Pass excursion ID
             context.startActivity(intent);
         });
+
     }
 
     @Override

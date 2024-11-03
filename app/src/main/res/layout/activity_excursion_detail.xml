@@ -5,20 +5,31 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_view_excursion_title"
-        android:layout_width="wrap_content"
+    <!-- Editable Title -->
+    <EditText
+        android:id="@+id/edit_text_excursion_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Excursion Title"
+        android:hint="Excursion Title"
         android:textSize="20sp"
         android:textStyle="bold"
         android:paddingBottom="8dp" />
 
-    <TextView
-        android:id="@+id/text_view_excursion_date"
+    <!-- update excursion -->
+    <EditText
+        android:id="@+id/edit_text_excursion_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Excursion Date (yyyy-MM-dd)"
+        android:textSize="18sp"
+        android:inputType="date" />
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/button_save_changes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Excursion Date"
-        android:textSize="18sp" />
-
+        android:text="Save Changes"
+        android:paddingTop="16dp" />
 </LinearLayout>
+
