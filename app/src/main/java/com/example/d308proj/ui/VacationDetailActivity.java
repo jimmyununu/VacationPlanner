@@ -71,12 +71,20 @@ public class VacationDetailActivity extends AppCompatActivity {
         String hotel = hotelInput.getText().toString();
         Date startDate, endDate;
 
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
         //date format validation
         try {
-            startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateInput.getText().toString());
-            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateInput.getText().toString());
+            startDate = dateFormat.parse(startDateInput.getText().toString());
+            endDate = dateFormat.parse(endDateInput.getText().toString());
         } catch (ParseException e) {
-            Toast.makeText(this, "Invalid date format.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid date format. Try yyyy-mm-dd", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // start date before end date
+        if (endDate.before(startDate)) {
+            Toast.makeText(this, "End date must be after start date.", Toast.LENGTH_SHORT).show();
             return;
         }
 

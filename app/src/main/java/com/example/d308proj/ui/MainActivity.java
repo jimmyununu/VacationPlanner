@@ -62,14 +62,22 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date startDate, endDate;
 
-        //ensure date is in proper format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+
+        //ensure date is in proper format (same as in the vacation detail ediotor)
         try {
-            startDate = sdf.parse(startDateStr);
-            endDate = sdf.parse(endDateStr);
+            startDate = dateFormat.parse(startDateInput.getText().toString());
+            endDate = dateFormat.parse(endDateInput.getText().toString());
         } catch (ParseException e) {
-            Toast.makeText(this, "Invalid date, must be yyyy-MM-dd", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid date format. Try yyyy-mm-dd", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (endDate.before(startDate)) {
+            Toast.makeText(this, "End date must be after start date.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Vacation vacation = new Vacation(title, hotel, startDate, endDate);
         Executors.newSingleThreadExecutor().execute(() -> {
             MyApplication.getDatabase().vacationDao().insert(vacation);
