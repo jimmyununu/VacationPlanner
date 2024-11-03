@@ -1,13 +1,13 @@
 package com.example.d308proj.database;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-import androidx.room.ForeignKey;
-
 import java.util.Date;
 
-@Entity(tableName = "excursions",
+@Entity(
+        tableName = "excursions",
         foreignKeys = @ForeignKey(
                 entity = Vacation.class,
                 parentColumns = "id",
@@ -16,8 +16,6 @@ import java.util.Date;
         ),
         indices = {@Index(value = "vacationId")}
 )
-
-
 public class Excursion {
 
     @PrimaryKey(autoGenerate = true)
@@ -25,6 +23,8 @@ public class Excursion {
     private String title;
     private Date date;
     private int vacationId;  // Foreign key linking to Vacation
+
+    // Constructor
     public Excursion(String title, Date date, int vacationId) {
         this.title = title;
         this.date = date;
@@ -44,4 +44,6 @@ public class Excursion {
     public int getVacationId() { return vacationId; }
     public void setVacationId(int vacationId) { this.vacationId = vacationId; }
 }
+
+
 

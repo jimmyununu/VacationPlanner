@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.d308proj.R;
 import com.example.d308proj.database.AppDatabase;
 import com.example.d308proj.database.Excursion;
+import com.example.d308proj.database.Vacation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,39 +46,58 @@ public class AddExcursionActivity extends AppCompatActivity {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             dateFormat.setLenient(false);
-            Date date = dateFormat.parse(dateStr);
+            Date excursionDate = dateFormat.parse(dateStr);
 
-            // debugging log
-            Log.d("AddExcursionActivity", "Parsed date: " + date);
+            // Debugging log
+            Log.d("AddExcursionActivity", "Parsed date: " + excursionDate);
             Log.d("AddExcursionActivity", "Title: " + title);
 
-            //ensure we have a vacation id assigned.
+            // Ensure we have a valid vacation ID
             if (vacationId == -1) {
                 Toast.makeText(this, "Vacation ID is invalid.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Excursion excursion = new Excursion(title, date, vacationId);
+
+            // Fetch the associated vacation's start and end dates
             Executors.newSingleThreadExecutor().execute(() -> {
-                try {
-                    AppDatabase.getInstance(this).excursionDao().insert(excursion);
-                    runOnUiThread(() -> {
-                        Toast.makeText(this, "Excursion saved!", Toast.LENGTH_SHORT).show();
-                        // excursion alarm setter.
-                        String message = "Excursion: " + title + " is happening today!";
-                        AlarmScheduler.scheduleAlarm(this, date, title, message);
-                        finish();
-                    });
-                } catch (Exception e) {
-                    Log.e("AddExcursionActivity", "Error inserting excursion", e);
-                    runOnUiThread(() -> Toast.makeText(this, "Error saving excursion", Toast.LENGTH_SHORT).show());
+                AppDatabase db = AppDatabase.getInstance(this);
+                Vacation vacation = db.vacationDao().getVacationById(vacationId);
+
+                if (vacation != null) {
+                    Date vacationStartDate = vacation.getStartDate();
+                    Date vacationEndDate = vacation.getEndDate();
+
+                    //lets us view the date without time to guide to proper format
+                    SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String simpleStart = dateOnlyFormat.format(vacationStartDate);
+                    String simpleEnd = dateOnlyFormat.format(vacationEndDate);
+
+                    // Check if the excursion date is within the vacation period
+                    if (excursionDate.before(vacationStartDate) || excursionDate.after(vacationEndDate)) {
+                        runOnUiThread(() -> Toast.makeText(this, "Excursion date must be within the vacation period." + simpleStart + " to " + simpleEnd, Toast.LENGTH_SHORT).show());
+                    } else {
+                        // If date is valid, proceed with saving the excursion
+                        Excursion excursion = new Excursion(title, excursionDate, vacationId);
+                        db.excursionDao().insert(excursion);
+                        runOnUiThread(() -> {
+                            Toast.makeText(this, "Excursion saved!", Toast.LENGTH_SHORT).show();
+                            // Add notification
+                            String message = "Excursion: " + title + " is happening today!";
+                            AlarmScheduler.scheduleAlarm(this, excursionDate, title, message);
+                            finish();
+                        });
+                    }
+                } else {
+                    runOnUiThread(() -> Toast.makeText(this, "Vacation not found.", Toast.LENGTH_SHORT).show());
                 }
             });
 
         } catch (ParseException e) {
             Log.e("AddExcursionActivity", "Date parsing failed", e);
-            Toast.makeText(this, "Invalid date format. yyyy-MM-dd", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid date format. Use yyyy-MM-dd.", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
 
 
