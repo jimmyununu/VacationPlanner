@@ -43,6 +43,9 @@ public class VacationDetailActivity extends AppCompatActivity {
         loadVacationDetails(vacationId);
 
         saveVacationButton.setOnClickListener(v -> saveChanges());
+        //share button
+        Button shareVacationButton = findViewById(R.id.shareVacationButton);
+        shareVacationButton.setOnClickListener(v -> shareVacationDetails());
     }
 
     private void loadVacationDetails(int vacationId) {
@@ -113,6 +116,23 @@ public class VacationDetailActivity extends AppCompatActivity {
 
     }
 
+    //share logic
+    private void shareVacationDetails() {
+        if (vacation != null) {
+            // information to share
+            String vacationDetails = "Vacation Title: " + vacation.getTitle() +
+                    "\nHotel: " + vacation.getHotel() +
+                    "\nStart Date: " + new SimpleDateFormat("yyyy-MM-dd").format(vacation.getStartDate()) +
+                    "\nEnd Date: " + new SimpleDateFormat("yyyy-MM-dd").format(vacation.getEndDate());
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, vacationDetails);
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Vacation Details");
+            startActivity(Intent.createChooser(shareIntent, "Share Vacation Details"));
+        } else {
+            Toast.makeText(this, "No vacation details to share.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 

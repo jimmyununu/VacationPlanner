@@ -40,4 +40,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save Changes" />
+
+    <!-- share button -->
+    <Button
+        android:id="@+id/shareVacationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share Vacation" />
+
 </LinearLayout>
