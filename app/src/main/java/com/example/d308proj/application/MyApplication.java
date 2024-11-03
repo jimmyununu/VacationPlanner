@@ -1,7 +1,9 @@
-package com.example.d308proj;
+package com.example.d308proj.application;
 
 import android.app.Application;
 import androidx.room.Room;
+
+import com.example.d308proj.database.AppDatabase;
 
 public class MyApplication extends Application {
 

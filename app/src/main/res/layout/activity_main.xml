@@ -6,33 +6,43 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Vacation title input -->
     <EditText
         android:id="@+id/titleInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Vacation Title" />
-
+    <!-- Hotel input -->
     <EditText
         android:id="@+id/hotelInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Hotel/Place" />
 
+    <!-- Start date input -->
     <EditText
         android:id="@+id/startDateInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Start Date (yyyy-MM-dd)" />
 
+    <!-- End Date Input -->
     <EditText
         android:id="@+id/endDateInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="End Date (yyyy-MM-dd)" />
 
+    <!-- save vacation button -->
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save Vacation" />
+
+    <!-- Display currently saved vacations -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vacationRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
