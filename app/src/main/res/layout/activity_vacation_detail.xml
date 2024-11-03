@@ -48,11 +48,23 @@
         android:layout_height="wrap_content"
         android:text="Share Vacation" />
 
+    <!-- add excursion button -->
     <Button
         android:id="@+id/btn_add_excursion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Excursion" />
+
+    <!-- display excursion list -->
+    <TextView
+        android:id="@+id/text_view_excursions_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Excursions"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_excursions"
