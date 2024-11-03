@@ -12,7 +12,7 @@ import com.example.d308proj.database.ExcursionDao;
 import com.example.d308proj.database.Vacation;
 import com.example.d308proj.database.VacationDao;
 
-@Database(entities = {Vacation.class, Excursion.class}, version = 4, exportSchema = false)
+@Database(entities = {Vacation.class, Excursion.class}, version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

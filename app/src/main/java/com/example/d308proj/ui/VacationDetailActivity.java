@@ -8,14 +8,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.d308proj.R;
 import com.example.d308proj.database.AppDatabase;
+import com.example.d308proj.database.Excursion;
+import com.example.d308proj.database.ExcursionDao;
 import com.example.d308proj.database.Vacation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 public class VacationDetailActivity extends AppCompatActivity {
@@ -27,32 +32,52 @@ public class VacationDetailActivity extends AppCompatActivity {
     private Button saveVacationButton;
     private Vacation vacation;
     private AppDatabase db;
+    private ExcursionDao excursionDao;
+    private RecyclerView recyclerView;
+    private ExcursionAdapter excursionAdapter;
+    private int vacationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_detail);
 
+        // Initialize UI components
         vacationTitleInput = findViewById(R.id.vacationTitleInput);
         hotelInput = findViewById(R.id.hotelInput);
         startDateInput = findViewById(R.id.startDateInput);
         endDateInput = findViewById(R.id.endDateInput);
         saveVacationButton = findViewById(R.id.saveVacationButton);
+
+        // Database instance and DAO
         db = AppDatabase.getInstance(getApplicationContext());
-        int vacationId = getIntent().getIntExtra("vacationId", -1);
+        excursionDao = db.excursionDao();
+
+        // Get vacation ID and load vacation details
+        vacationId = getIntent().getIntExtra("vacationId", -1);
         loadVacationDetails(vacationId);
 
+        // Set up "Save" button for vacation details
         saveVacationButton.setOnClickListener(v -> saveChanges());
-        //share button
+
+        // Share button setup
         Button shareVacationButton = findViewById(R.id.shareVacationButton);
         shareVacationButton.setOnClickListener(v -> shareVacationDetails());
+
+        // Set up RecyclerView to display excursions
+        recyclerView = findViewById(R.id.recycler_view_excursions);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        loadExcursionsForVacation(vacationId);
+
+        // Set up "Add Excursion" button
+        Button btnAddExcursion = findViewById(R.id.btn_add_excursion);
+        btnAddExcursion.setOnClickListener(v -> openAddExcursionActivity());
     }
 
     private void loadVacationDetails(int vacationId) {
         Executors.newSingleThreadExecutor().execute(() -> {
             vacation = db.vacationDao().getVacationById(vacationId);
             runOnUiThread(() -> {
-                //ensure the vacation being updated exist (Not needed but cause errors/warnings without)
                 if (vacation != null) {
                     vacationTitleInput.setText(vacation.getTitle());
                     hotelInput.setText(vacation.getHotel());
@@ -67,18 +92,25 @@ public class VacationDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void loadExcursionsForVacation(int vacationId) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<Excursion> excursions = excursionDao.getExcursionsForVacation(vacationId);
+            runOnUiThread(() -> {
+                excursionAdapter = new ExcursionAdapter(excursions);
+                recyclerView.setAdapter(excursionAdapter);
+            });
+        });
+    }
+
     private void saveChanges() {
-        // Collect input values
         String title = vacationTitleInput.getText().toString();
         String hotel = hotelInput.getText().toString();
         Date startDate, endDate;
 
-        //debug logging
         Log.d("VacationDetailActivity", "Saving changes for vacation: " + title + ", Hotel: " + hotel);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
-        //date format validation
         try {
             startDate = dateFormat.parse(startDateInput.getText().toString());
             endDate = dateFormat.parse(endDateInput.getText().toString());
@@ -86,20 +118,18 @@ public class VacationDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid date format. Try yyyy-mm-dd", Toast.LENGTH_SHORT).show();
             return;
         }
-        // start date before end date
+
         if (endDate.before(startDate)) {
             Toast.makeText(this, "End date must be after start date.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (vacation != null) {
-            // set the new information
             vacation.setTitle(title);
             vacation.setHotel(hotel);
             vacation.setStartDate(startDate);
             vacation.setEndDate(endDate);
 
-            // save to database
             Executors.newSingleThreadExecutor().execute(() -> {
                 db.vacationDao().update(vacation);
                 runOnUiThread(() -> {
@@ -113,13 +143,10 @@ public class VacationDetailActivity extends AppCompatActivity {
             AlarmScheduler.scheduleAlarm(this, startDate, "Vacation Starting", "Your vacation '" + title + "' is starting today!");
             AlarmScheduler.scheduleAlarm(this, endDate, "Vacation Ending", "Your vacation '" + title + "' is ending today!");
         }
-
     }
 
-    //share logic
     private void shareVacationDetails() {
         if (vacation != null) {
-            // information to share
             String vacationDetails = "Vacation Title: " + vacation.getTitle() +
                     "\nHotel: " + vacation.getHotel() +
                     "\nStart Date: " + new SimpleDateFormat("yyyy-MM-dd").format(vacation.getStartDate()) +
@@ -134,9 +161,18 @@ public class VacationDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void openAddExcursionActivity() {
+        Intent intent = new Intent(VacationDetailActivity.this, AddExcursionActivity.class);
+        intent.putExtra("vacationId", vacationId);
+        startActivity(intent);
+    }
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadExcursionsForVacation(vacationId);
+    }
 }
+
 
 
