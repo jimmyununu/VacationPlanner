@@ -1,6 +1,7 @@
 package com.example.d308proj.database;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.ForeignKey;
 
@@ -12,18 +13,18 @@ import java.util.Date;
                 parentColumns = "id",
                 childColumns = "vacationId",
                 onDelete = ForeignKey.CASCADE
-        ))
+        ),
+        indices = {@Index(value = "vacationId")}
+)
+
+
 public class Excursion {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private String title;
-
     private Date date;
-
     private int vacationId;  // Foreign key linking to Vacation
-
     public Excursion(String title, Date date, int vacationId) {
         this.title = title;
         this.date = date;

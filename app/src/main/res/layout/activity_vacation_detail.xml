@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Vacation title edit view -->
+    <EditText
+        android:id="@+id/vacationTitleInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Vacation Title" />
+
+    <!-- Hotel edit view-->
+    <EditText
+        android:id="@+id/hotelInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hotel/Place" />
+
+    <!-- Start date edit view-->
+    <EditText
+        android:id="@+id/startDateInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Start Date (yyyy-MM-dd)" />
+
+    <!-- End date edit view-->
+    <EditText
+        android:id="@+id/endDateInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="End Date (yyyy-MM-dd)" />
+
+    <!-- Save changes-->
+    <Button
+        android:id="@+id/saveVacationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Changes" />
+</LinearLayout>

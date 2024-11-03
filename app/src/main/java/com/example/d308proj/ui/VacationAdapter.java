@@ -42,6 +42,15 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
         holder.titleTextView.setText(vacation.getTitle());
         holder.hotelTextView.setText(vacation.getHotel());
         holder.deleteButton.setOnClickListener(v -> onDeleteClickListener.onDeleteClick(vacation));
+//added if statement to listeners because nullpointer error
+
+        //pulls up details of clicked vacation to be edited or viewed
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) onItemClickListener.onItemClick(vacation);
+        });
+        holder.deleteButton.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) onDeleteClickListener.onDeleteClick(vacation);
+        });
     }
 
     @Override
@@ -60,5 +69,18 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
+    public interface OnItemClickListener {
+        void onItemClick(Vacation vacation);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+
+
+
 }
 

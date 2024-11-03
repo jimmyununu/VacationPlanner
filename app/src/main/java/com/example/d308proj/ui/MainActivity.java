@@ -4,12 +4,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
+import android.content.Intent;
 
 import com.example.d308proj.R;
 import com.example.d308proj.application.MyApplication;
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
     private EditText startDateInput;
     private EditText endDateInput;
     private Button saveButton;
+
+    private List<Vacation> vacationList = new ArrayList<>();  // List to store vacation data
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +82,20 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
     }
     private void loadVacations() {
         Executors.newSingleThreadExecutor().execute(() -> {
-            List<Vacation> vacations = MyApplication.getDatabase().vacationDao().getAllVacations();
+            vacationList = MyApplication.getDatabase().vacationDao().getAllVacations(); // Assign to class-level variable
             runOnUiThread(() -> {
-                vacationAdapter = new VacationAdapter(vacations, this);
+                vacationAdapter = new VacationAdapter(vacationList, this);
                 vacationRecyclerView.setAdapter(vacationAdapter);
+
+                vacationAdapter.setOnItemClickListener(vacation -> {
+                    Intent intent = new Intent(MainActivity.this, VacationDetailActivity.class);
+                    intent.putExtra("vacationId", vacation.getId());
+                    startActivityForResult(intent, 1);  // Use startActivityForResult to detect updates
+                });
             });
         });
     }
+
 
     //Vacation Deletion
     @Override
@@ -104,6 +116,28 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
             }
         });
     }
+
+// Allows us to see our changes if a vacation is edited
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Vacation updatedVacation = (Vacation) data.getSerializableExtra("updatedVacation");
+
+            //finds the updated vacation and changes it to be displayed in our viewer
+            if (updatedVacation != null) {
+                for (int i = 0; i < vacationList.size(); i++) {
+                    if (vacationList.get(i).getId() == updatedVacation.getId()) {
+                        vacationList.set(i, updatedVacation);
+                        vacationAdapter.notifyItemChanged(i);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
 }
 
 

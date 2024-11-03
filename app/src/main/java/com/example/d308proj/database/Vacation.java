@@ -3,11 +3,13 @@ package com.example.d308proj.database;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Entity(tableName = "vacations")
-public class Vacation {
+public class Vacation implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
