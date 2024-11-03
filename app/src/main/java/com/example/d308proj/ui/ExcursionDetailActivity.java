@@ -74,6 +74,9 @@ public class ExcursionDetailActivity extends AppCompatActivity {
                     excursion.setDate(newDate);
                     db.excursionDao().update(excursion);
                     runOnUiThread(() -> Toast.makeText(this, "Excursion updated!", Toast.LENGTH_SHORT).show());
+                    //excursion alarm
+                    String message = "Excursion: " + newTitle + " is happening today!";
+                    AlarmScheduler.scheduleAlarm(this, newDate, newTitle, message);
                     finish();
                 } else {
                     runOnUiThread(() -> Toast.makeText(this, "Excursion not found.", Toast.LENGTH_SHORT).show());

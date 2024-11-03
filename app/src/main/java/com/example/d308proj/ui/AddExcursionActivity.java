@@ -62,6 +62,9 @@ public class AddExcursionActivity extends AppCompatActivity {
                     AppDatabase.getInstance(this).excursionDao().insert(excursion);
                     runOnUiThread(() -> {
                         Toast.makeText(this, "Excursion saved!", Toast.LENGTH_SHORT).show();
+                        // excursion alarm setter.
+                        String message = "Excursion: " + title + " is happening today!";
+                        AlarmScheduler.scheduleAlarm(this, date, title, message);
                         finish();
                     });
                 } catch (Exception e) {
