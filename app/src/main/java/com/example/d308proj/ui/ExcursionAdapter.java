@@ -1,5 +1,7 @@
 package com.example.d308proj.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +21,12 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
 
     private List<Excursion> excursions;
     private AppDatabase db;
+    private Context context;
 
-    // Constructor accepting the database instance
-    public ExcursionAdapter(List<Excursion> excursions, AppDatabase db) {
+    public ExcursionAdapter(List<Excursion> excursions, AppDatabase db, Context context) {
         this.excursions = excursions;
         this.db = db;
+        this.context = context;
     }
 
     @NonNull
@@ -38,9 +41,17 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
     public void onBindViewHolder(@NonNull ExcursionViewHolder holder, int position) {
         Excursion excursion = excursions.get(position);
         holder.titleTextView.setText(excursion.getTitle());
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         holder.dateTextView.setText(dateFormat.format(excursion.getDate()));
         holder.deleteButton.setOnClickListener(v -> deleteExcursion(holder.getAdapterPosition()));
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ExcursionDetailActivity.class);
+            intent.putExtra("title", excursion.getTitle());
+            intent.putExtra("date", dateFormat.format(excursion.getDate()));
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -70,6 +81,7 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         }
     }
 }
+
 
 
 

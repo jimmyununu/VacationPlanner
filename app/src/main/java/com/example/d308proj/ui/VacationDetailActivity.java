@@ -49,27 +49,21 @@ public class VacationDetailActivity extends AppCompatActivity {
         endDateInput = findViewById(R.id.endDateInput);
         saveVacationButton = findViewById(R.id.saveVacationButton);
 
-        // Database instance and DAO
         db = AppDatabase.getInstance(getApplicationContext());
         excursionDao = db.excursionDao();
 
-        // Get vacation ID and load vacation details
         vacationId = getIntent().getIntExtra("vacationId", -1);
         loadVacationDetails(vacationId);
 
-        // Set up "Save" button for vacation details
         saveVacationButton.setOnClickListener(v -> saveChanges());
 
-        // Share button setup
         Button shareVacationButton = findViewById(R.id.shareVacationButton);
         shareVacationButton.setOnClickListener(v -> shareVacationDetails());
 
-        // Set up RecyclerView to display excursions
         recyclerView = findViewById(R.id.recycler_view_excursions);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadExcursionsForVacation(vacationId);
 
-        // Set up "Add Excursion" button
         Button btnAddExcursion = findViewById(R.id.btn_add_excursion);
         btnAddExcursion.setOnClickListener(v -> openAddExcursionActivity());
     }
@@ -96,11 +90,12 @@ public class VacationDetailActivity extends AppCompatActivity {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Excursion> excursions = excursionDao.getExcursionsForVacation(vacationId);
             runOnUiThread(() -> {
-                excursionAdapter = new ExcursionAdapter(excursions, db);  // Pass the database instance
+                excursionAdapter = new ExcursionAdapter(excursions, db, this);  // Pass 'this' as context
                 recyclerView.setAdapter(excursionAdapter);
             });
         });
     }
+
 
 
     private void saveChanges() {
@@ -173,6 +168,9 @@ public class VacationDetailActivity extends AppCompatActivity {
         super.onResume();
         loadExcursionsForVacation(vacationId);
     }
+
+
+
 }
 
 

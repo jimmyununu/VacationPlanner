@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".ui.VacationDetailActivity" />
         <activity android:name=".ui.AddExcursionActivity" />
+        <activity android:name=".ui.ExcursionDetailActivity" />
         <receiver android:name=".receivers.VacationAlarmReceiver" />
     </application>
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
