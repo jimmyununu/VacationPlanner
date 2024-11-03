@@ -96,11 +96,12 @@ public class VacationDetailActivity extends AppCompatActivity {
         Executors.newSingleThreadExecutor().execute(() -> {
             List<Excursion> excursions = excursionDao.getExcursionsForVacation(vacationId);
             runOnUiThread(() -> {
-                excursionAdapter = new ExcursionAdapter(excursions);
+                excursionAdapter = new ExcursionAdapter(excursions, db);  // Pass the database instance
                 recyclerView.setAdapter(excursionAdapter);
             });
         });
     }
+
 
     private void saveChanges() {
         String title = vacationTitleInput.getText().toString();
