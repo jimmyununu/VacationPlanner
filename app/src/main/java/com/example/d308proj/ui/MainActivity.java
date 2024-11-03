@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
             Toast.makeText(this, "End date must be after start date.", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        AlarmScheduler.scheduleAlarm(this, startDate, "Vacation Starting", "Your vacation '" + title + "' is starting today!");
+        AlarmScheduler.scheduleAlarm(this, endDate, "Vacation Ending", "Your vacation '" + title + "' is ending today!");
         Vacation vacation = new Vacation(title, hotel, startDate, endDate);
         Executors.newSingleThreadExecutor().execute(() -> {
             MyApplication.getDatabase().vacationDao().insert(vacation);
@@ -144,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
             }
         }
     }
+
 
 
 }
