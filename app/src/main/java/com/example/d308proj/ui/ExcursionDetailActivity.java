@@ -81,7 +81,7 @@ public class ExcursionDetailActivity extends AppCompatActivity {
             });
 
         } catch (ParseException e) {
-            Toast.makeText(this, "Invalid date format. Use yyyy-MM-dd", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid date format. yyyy-MM-dd", Toast.LENGTH_SHORT).show();
             Log.e("ExcursionDetailActivity", "Date parsing error", e);
         }
     }
