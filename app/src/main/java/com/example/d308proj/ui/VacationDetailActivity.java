@@ -42,9 +42,7 @@ public class VacationDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_detail);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
 
         // Initialize UI components
         vacationTitleInput = findViewById(R.id.vacationTitleInput);
