@@ -63,5 +63,12 @@
         android:layout_weight="1"
         android:layout_marginTop="16dp" />
 
+    <!-- reset pin option -->
+    <Button
+        android:id="@+id/button_reset_pin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset PIN" />
+
 </LinearLayout>
 

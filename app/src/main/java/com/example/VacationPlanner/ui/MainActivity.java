@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.VacationPlanner.R;
 import com.example.VacationPlanner.application.MyApplication;
 import com.example.VacationPlanner.database.Vacation;
+import com.example.VacationPlanner.utils.SecurePreferencesHelper;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
         saveButton.setOnClickListener(v -> saveVacation());
         setupSearchView();
         loadVacations();
+        // Set up the Reset PIN button
+        Button resetPinButton = findViewById(R.id.button_reset_pin);
+        resetPinButton.setOnClickListener(v -> resetPin());
     }
 
     private void setupSearchView() {
@@ -151,7 +156,21 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
         loadVacations();
     }
 
+    private void resetPin() {
+        // Clear pin
+        SecurePreferencesHelper.putString(this, "user_pin", null);
+
+        // Notify
+        Toast.makeText(this, "PIN has been reset. Please set a new PIN.", Toast.LENGTH_SHORT).show();
+
+        // redirects to pin creation
+        Intent setupPinIntent = new Intent(this, SetupPinActivity.class);
+        startActivity(setupPinIntent);
+        finish();
+    }
 }
+
+
 
 
 

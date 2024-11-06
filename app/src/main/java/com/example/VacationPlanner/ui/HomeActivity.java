@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
+
 public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         try {
             String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
@@ -40,7 +42,10 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, "Error setting up secure storage. Please try again.", Toast.LENGTH_SHORT).show();
             finish();
         }
+
     }
+
+
 }
 
 

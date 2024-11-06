@@ -5,11 +5,12 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp">
-
+    <!-- this screen is not currently in use -->
     <Button
         android:id="@+id/button_open_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Vacations" />
+
 </LinearLayout>
 
