@@ -6,43 +6,62 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Search View for filtering vacations -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search vacations..."
+        android:layout_marginBottom="8dp" />
+
     <!-- Vacation title input -->
     <EditText
         android:id="@+id/titleInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Vacation Title" />
+        android:hint="Vacation Title"
+        android:layout_marginTop="8dp" />
+
     <!-- Hotel input -->
     <EditText
         android:id="@+id/hotelInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hotel/Place" />
+        android:hint="Hotel/Place"
+        android:layout_marginTop="8dp" />
 
     <!-- Start date input -->
     <EditText
         android:id="@+id/startDateInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Start Date (yyyy-MM-dd)" />
+        android:hint="Start Date (yyyy-MM-dd)"
+        android:layout_marginTop="8dp" />
 
     <!-- End Date Input -->
     <EditText
         android:id="@+id/endDateInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="End Date (yyyy-MM-dd)" />
+        android:hint="End Date (yyyy-MM-dd)"
+        android:layout_marginTop="8dp" />
 
-    <!-- save vacation button -->
+    <!-- Save vacation button -->
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Vacation" />
+        android:text="Save Vacation"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal" />
 
-    <!-- Display currently saved vacations -->
+    <!-- RecyclerView for displaying saved vacations -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vacationRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>
+

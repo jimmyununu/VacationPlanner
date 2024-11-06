@@ -2,7 +2,6 @@ package com.example.VacationPlanner.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,9 +41,6 @@ public class VacationDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_detail);
 
-
-
-        // Initialize UI components
         vacationTitleInput = findViewById(R.id.vacationTitleInput);
         hotelInput = findViewById(R.id.hotelInput);
         startDateInput = findViewById(R.id.startDateInput);
@@ -98,17 +94,14 @@ public class VacationDetailActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void saveChanges() {
         String title = vacationTitleInput.getText().toString();
         String hotel = hotelInput.getText().toString();
         Date startDate, endDate;
 
-        Log.d("VacationDetailActivity", "Saving changes for vacation: " + title + ", Hotel: " + hotel);
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
+
         try {
             startDate = dateFormat.parse(startDateInput.getText().toString());
             endDate = dateFormat.parse(endDateInput.getText().toString());
@@ -138,10 +131,12 @@ public class VacationDetailActivity extends AppCompatActivity {
                     finish();
                 });
             });
+
             AlarmScheduler.scheduleAlarm(this, startDate, "Vacation Starting", "Your vacation '" + title + "' is starting today!");
             AlarmScheduler.scheduleAlarm(this, endDate, "Vacation Ending", "Your vacation '" + title + "' is ending today!");
         }
     }
+
 
     private void shareVacationDetails() {
         if (vacation != null) {

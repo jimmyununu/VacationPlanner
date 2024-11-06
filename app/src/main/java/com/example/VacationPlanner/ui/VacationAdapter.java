@@ -7,17 +7,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.VacationPlanner.R;
 import com.example.VacationPlanner.database.Vacation;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
-//displays our list of currently saved vacation
 public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.VacationViewHolder> {
 
     private List<Vacation> vacationList;
+    private List<Vacation> fullVacationList;
     private OnDeleteClickListener onDeleteClickListener;
 
     public interface OnDeleteClickListener {
@@ -25,7 +24,8 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
     }
 
     public VacationAdapter(List<Vacation> vacationList, OnDeleteClickListener onDeleteClickListener) {
-        this.vacationList = vacationList;
+        this.vacationList = new ArrayList<>(vacationList);
+        this.fullVacationList = new ArrayList<>(vacationList);
         this.onDeleteClickListener = onDeleteClickListener;
     }
 
@@ -41,15 +41,13 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
         Vacation vacation = vacationList.get(position);
         holder.titleTextView.setText(vacation.getTitle());
         holder.hotelTextView.setText(vacation.getHotel());
-        holder.deleteButton.setOnClickListener(v -> onDeleteClickListener.onDeleteClick(vacation));
-//added if statement to listeners because nullpointer error
 
-        //pulls up details of clicked vacation to be edited or viewed
-        holder.itemView.setOnClickListener(v -> {
-            if (onItemClickListener != null) onItemClickListener.onItemClick(vacation);
-        });
         holder.deleteButton.setOnClickListener(v -> {
             if (onDeleteClickListener != null) onDeleteClickListener.onDeleteClick(vacation);
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) onItemClickListener.onItemClick(vacation);
         });
     }
 
@@ -69,6 +67,7 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
+
     public interface OnItemClickListener {
         void onItemClick(Vacation vacation);
     }
@@ -79,8 +78,23 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
         this.onItemClickListener = listener;
     }
 
-
+    public void filter(String query) {
+        vacationList.clear();
+        if (query.isEmpty()) {
+            vacationList.addAll(fullVacationList);
+        } else {
+            String lowerCaseQuery = query.toLowerCase();
+            for (Vacation vacation : fullVacationList) {
+                if (vacation.getTitle().toLowerCase().contains(lowerCaseQuery) ||
+                        vacation.getHotel().toLowerCase().contains(lowerCaseQuery)) {
+                    vacationList.add(vacation);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 
 
 }
+
 
