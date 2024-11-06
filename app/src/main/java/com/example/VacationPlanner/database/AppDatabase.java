@@ -8,7 +8,7 @@ import androidx.room.TypeConverters;
 
 
 //incrementing this version number will reset the database to a fresh install like state
-@Database(entities = {Vacation.class, Excursion.class}, version = 12, exportSchema = false)
+@Database(entities = {Vacation.class, Excursion.class}, version = 14, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;

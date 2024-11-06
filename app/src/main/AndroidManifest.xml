@@ -29,6 +29,9 @@
         <activity android:name=".ui.VacationDetailActivity" />
         <activity android:name=".ui.AddExcursionActivity" />
         <activity android:name=".ui.ExcursionDetailActivity" />
+        <activity android:name=".ui.SetupPinActivity" android:exported="true"/>
+        <activity android:name=".ui.PinVerificationActivity" />
+
 
         <!-- Alarm receiver -->
         <receiver android:name=".receivers.VacationAlarmReceiver" />
