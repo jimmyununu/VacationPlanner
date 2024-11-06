@@ -16,6 +16,7 @@ import java.util.Date;
         ),
         indices = {@Index(value = "vacationId")}
 )
+
 public class Excursion {
 
     @PrimaryKey(autoGenerate = true)

@@ -31,6 +31,7 @@ public class Vacation implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
 //getters and setters
 
     //ID
