@@ -141,7 +141,9 @@ public class VacationDetailActivity extends AppCompatActivity {
 
     private void shareVacationDetails() {
         if (vacation != null) {
-            String vacationDetails = "Vacation Title: " + vacation.getTitle() +
+            String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+            String vacationDetails = "Shared on: " + timestamp + ("\n") +
+                    "\nVacation Title: " + vacation.getTitle() +
                     "\nHotel: " + vacation.getHotel() +
                     "\nStart Date: " + new SimpleDateFormat("yyyy-MM-dd").format(vacation.getStartDate()) +
                     "\nEnd Date: " + new SimpleDateFormat("yyyy-MM-dd").format(vacation.getEndDate());
