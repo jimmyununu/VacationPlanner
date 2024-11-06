@@ -16,8 +16,7 @@
         android:id="@+id/edit_text_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Excursion Date (yyyy-MM-dd)"
-        android:inputType="date" />
+        android:hint="Excursion Date (yyyy-MM-dd)" />
 
     <Button
         android:id="@+id/button_save_excursion"
