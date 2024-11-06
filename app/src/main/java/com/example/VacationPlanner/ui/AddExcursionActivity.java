@@ -72,6 +72,7 @@ public class AddExcursionActivity extends AppCompatActivity {
                     String simpleStart = dateOnlyFormat.format(vacationStartDate);
                     String simpleEnd = dateOnlyFormat.format(vacationEndDate);
 
+
                     // Check if the excursion date is within the vacation period
                     if (excursionDate.before(vacationStartDate) || excursionDate.after(vacationEndDate)) {
                         runOnUiThread(() -> Toast.makeText(this, "Excursion date must be within the vacation period." + simpleStart + " to " + simpleEnd, Toast.LENGTH_SHORT).show());

@@ -89,6 +89,7 @@ public class ExcursionDetailActivity extends AppCompatActivity {
                     String formattedStartDate = dateFormat.format(vacation.getStartDate());
                     String formattedEndDate = dateFormat.format(vacation.getEndDate());
 
+
                     // Validate that the excursion date is within the vacation period
                     if (newExcursionDate.before(vacation.getStartDate()) || newExcursionDate.after(vacation.getEndDate())) {
                         runOnUiThread(() -> Toast.makeText(this, "Excursion date must be within the vacation period: "
@@ -119,6 +120,7 @@ public class ExcursionDetailActivity extends AppCompatActivity {
                 }
             });
 
+            //ensures our excursion date format matches yyyy-mm-dd
         } catch (ParseException e) {
             Toast.makeText(this, "Invalid date format. Use yyyy-MM-dd.", Toast.LENGTH_SHORT).show();
         }

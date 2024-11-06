@@ -102,6 +102,7 @@ public class VacationDetailActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
 
+        //Date format validation to ensure yyyy-mm-dd inputted
         try {
             startDate = dateFormat.parse(startDateInput.getText().toString());
             endDate = dateFormat.parse(endDateInput.getText().toString());
@@ -109,7 +110,7 @@ public class VacationDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid date format. Try yyyy-mm-dd", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        //Date validation to ensure end date must be after the vacation start date
         if (endDate.before(startDate)) {
             Toast.makeText(this, "End date must be after start date.", Toast.LENGTH_SHORT).show();
             return;
