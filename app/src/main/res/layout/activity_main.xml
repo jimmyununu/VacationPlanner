@@ -6,20 +6,23 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Search View for filtering vacations -->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
+
+    <!-- Vacation Input Section Header -->
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:queryHint="Search vacations..."
-        android:layout_marginBottom="8dp" />
+        android:text="Add New Vacation"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"/>
 
     <!-- Vacation title input -->
     <EditText
         android:id="@+id/titleInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Vacation Title"
+        android:hint="Enter Vacation Title"
         android:layout_marginTop="8dp" />
 
     <!-- Hotel input -->
@@ -27,7 +30,7 @@
         android:id="@+id/hotelInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hotel/Place"
+        android:hint="Enter Hotel/Place"
         android:layout_marginTop="8dp" />
 
     <!-- Start date input -->
@@ -55,20 +58,58 @@
         android:layout_marginTop="16dp"
         android:layout_gravity="center_horizontal" />
 
+    <!-- Divider line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_marginVertical="16dp" />
+
+    <!-- My Vacations Header with instructions -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Vacations"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="4dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tap on a vacation to edit details or view more"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Search View for filtering vacations -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search vacations..."
+        android:layout_marginBottom="12dp"
+        android:iconifiedByDefault="false" />
+
     <!-- RecyclerView for displaying saved vacations -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vacationRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="8dp" />
 
-    <!-- reset pin option -->
+    <!-- Reset PIN button aligned to center -->
     <Button
         android:id="@+id/button_reset_pin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset PIN" />
+        android:text="Reset PIN"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp" />
 
 </LinearLayout>
+
 

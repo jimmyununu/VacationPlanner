@@ -8,13 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
+import com.example.VacationPlanner.utils.SecurePreferencesHelper;
+
 
 public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //For testing and debugging if a pin is forgotten
+        //resetStoredPin();
 
         try {
             String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
@@ -44,6 +47,12 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+    //For testing and debugging if a pin is forgotten
+    //private void resetStoredPin() {
+    //    SecurePreferencesHelper.putString(this, "user_pin", null);
+    //    Toast.makeText(this, "PIN has been reset. Please set a new PIN.", Toast.LENGTH_SHORT).show();
+    //}
+
 
 
 }
