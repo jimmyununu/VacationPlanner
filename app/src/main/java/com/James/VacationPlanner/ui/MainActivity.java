@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
     }
 
 
-    private void saveVacation() {
+    public void saveVacation() {
         String title = titleInput.getText().toString();
         String hotel = hotelInput.getText().toString();
         String startDateStr = startDateInput.getText().toString();
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
         }
     }
 
-    private void loadVacations() {
+    public void loadVacations() {
         Executors.newSingleThreadExecutor().execute(() -> {
             vacationList = MyApplication.getDatabase().vacationDao().getAllVacations();
             runOnUiThread(() -> {
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
         loadVacations();
     }
 
-    private void resetPin() {
+    public void resetPin() {
         // Clear pin
         SecurePreferencesHelper.putString(this, "user_pin", null);
 
@@ -182,6 +182,27 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
         Intent setupPinIntent = new Intent(this, SetupPinActivity.class);
         startActivity(setupPinIntent);
         finish();
+    }
+    public EditText getTitleInput() {
+        return titleInput;
+    }
+
+    public EditText getStartDateInput() {
+        return startDateInput;
+    }
+
+    public EditText getEndDateInput() {
+        return endDateInput;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
+    }
+    public List<Vacation> getVacationList() {
+        return vacationList;
+    }
+    public VacationAdapter getVacationAdapter() {
+        return vacationAdapter;
     }
 }
 
