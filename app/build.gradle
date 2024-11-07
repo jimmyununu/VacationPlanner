@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.VacationPlanner'
+    namespace 'com.James.VacationPlanner'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.VacationPlanner"
+        applicationId "com.James.VacationPlanner"
         minSdk 26
         targetSdk 34
         versionCode 1
