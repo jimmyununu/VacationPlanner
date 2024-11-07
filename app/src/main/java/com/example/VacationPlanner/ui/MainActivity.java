@@ -1,5 +1,6 @@
 package com.example.VacationPlanner.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
         resetPinButton.setOnClickListener(v -> resetPin());
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setupSearchView() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -67,7 +69,20 @@ public class MainActivity extends AppCompatActivity implements VacationAdapter.O
                 return false;
             }
         });
+        //ensure the keyboard stays available when searching for vacation
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                searchView.requestFocus();
+            }
+        });
+
+        searchView.setOnTouchListener((v, event) -> {
+            searchView.requestFocus();
+            searchView.setIconified(false);
+            return false;
+        });
     }
+
 
     private void saveVacation() {
         String title = titleInput.getText().toString();

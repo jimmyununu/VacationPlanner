@@ -91,7 +91,9 @@
         android:layout_height="wrap_content"
         android:queryHint="Search vacations..."
         android:layout_marginBottom="12dp"
-        android:iconifiedByDefault="false" />
+        android:iconifiedByDefault="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
     <!-- RecyclerView for displaying saved vacations -->
     <androidx.recyclerview.widget.RecyclerView

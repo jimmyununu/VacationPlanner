@@ -7,7 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
-
+//import only needed if resetting the pin
 import com.example.VacationPlanner.utils.SecurePreferencesHelper;
 
 
